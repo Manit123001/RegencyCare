@@ -77,7 +77,7 @@ String id_name;
 
 
 
-        btnOk = (Button)findViewById(R.id.btnOk);
+        btnOk = (Button)findViewById(R.id.btnAccecpt);
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override

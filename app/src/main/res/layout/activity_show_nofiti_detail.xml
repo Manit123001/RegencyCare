@@ -22,7 +22,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <ImageView
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@drawable/ic_launcher"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <LinearLayout
@@ -50,7 +50,7 @@
 
                 <ImageView
                     android:id="@+id/ivImg"
-                    android:background="@color/colorAccent"
+                    android:background="#00BCD4"
                     android:layout_width="match_parent"
                     android:layout_height="200dp" />
 
@@ -71,9 +71,11 @@
                 <LinearLayout
                     android:layout_marginTop="8dp"
                     android:orientation="horizontal"
+                    android:layout_weight="1"
                     android:background="@android:color/darker_gray"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <FrameLayout
                         android:layout_weight="2"
                         android:layout_width="0dp"
@@ -84,13 +86,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                     </FrameLayout>
+
                     <Button
                         android:id="@+id/btnLocation"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
                         android:textAlignment="center"
-                        android:text="Location"
-                        android:gravity="right"
+                        android:text="ตำแหน่งเกิดเหตุ"
+                        android:background="@color/colorPrimary"
                         android:layout_width="0dp"
                         android:layout_height="match_parent" />
 
@@ -98,8 +101,7 @@
 
 
                 <Button
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/btnOk"
+                    android:id="@+id/btnAccecpt"
                     android:text="รับทราบ"
                     android:background="@android:color/holo_green_dark"
                     android:layout_width="match_parent"

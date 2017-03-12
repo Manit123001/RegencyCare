@@ -6,7 +6,7 @@ import android.view.MenuItem;
 
 import com.example.mcnewz.regencycare.R;
 import com.example.mcnewz.regencycare.dao.ItemDao;
-import com.example.mcnewz.regencycare.fragment.DetailFragment;
+import com.example.mcnewz.regencycare.fragment.ShowDetailFragment;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -20,7 +20,7 @@ public class DetailActivity extends AppCompatActivity {
 
         if (savedInstanceState == null){
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.contentContainer, DetailFragment.newInstance(dao))
+                    .add(R.id.contentContainer, ShowDetailFragment.newInstance(dao))
                     .commit();
         }
 

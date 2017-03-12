@@ -93,7 +93,7 @@ public class AlertFragment extends Fragment {
                 if ( response.isSuccessful()){
                     ItemCollectionDao dao = response.body();
 
-                    Toast.makeText(Contextor.getInstance().getContext(), "Complete"+dao.getData().get(0).getId(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(Contextor.getInstance().getContext(), "Complete"+dao.getData().get(0).getId(), Toast.LENGTH_SHORT).show();
 
                     listAdapter.setDao(dao);
                     listAdapter.notifyDataSetChanged();

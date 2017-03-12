@@ -22,7 +22,7 @@ import android.widget.Toast;
 import com.example.mcnewz.regencycare.R;
 import com.example.mcnewz.regencycare.dao.ItemDao;
 import com.example.mcnewz.regencycare.fragment.AlertFragment;
-import com.example.mcnewz.regencycare.fragment.DetailFragment;
+import com.example.mcnewz.regencycare.fragment.MapFragment;
 import com.example.mcnewz.regencycare.fragment.OneFragment;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements AlertFragment.Fra
 
         FirebaseMessaging.getInstance().subscribeToTopic("news");
         String token = FirebaseInstanceId.getInstance().getToken();
-        Log.d("TOKEN",token);
+        //Log.d("TOKEN",token);
 
         initTnstances();
 //        if (savedInstanceState == null)
@@ -84,10 +84,10 @@ public class MainActivity extends AppCompatActivity implements AlertFragment.Fra
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(AlertFragment.newInstance(), "Alert");
-        adapter.addFragment(new OneFragment(), "Noti");
-        adapter.addFragment(new OneFragment(), "Histo");
-        adapter.addFragment(new OneFragment(), "Profile");
+        adapter.addFragment(AlertFragment.newInstance(), "ข้อมูลการแจ้งเหตุ");
+        adapter.addFragment(MapFragment.newInstance(), "ตำแหน่งจุดเกิดเหตุ");
+        adapter.addFragment(new OneFragment(), "รายละเอียด");
+
 
 
 

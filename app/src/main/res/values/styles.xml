@@ -15,4 +15,36 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="searchViewEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:imeOptions">actionSearch</item>
+    </style>
+
+    <style name="CustomFloatingSearchViewTheme" parent="AppTheme">
+        <item name="editTextStyle">@style/searchViewEditTextStyle</item>
+        <item name="android:divider">#c9c9c9</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="colorControlNormal">#696969</item>
+        <item name="colorAccent">#fff</item>
+
+    </style>
+
+    <style name="CustomFloatingSearchViewTheme.send" parent="AppTheme">
+        <item name="colorAccent">@color/colorPrimarySend</item>
+    </style>
+    <style name="TextTypeAcident">
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center_horizontal|center_vertical</item>
+        <item name="android:clickable">false</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+
+
 </resources>
