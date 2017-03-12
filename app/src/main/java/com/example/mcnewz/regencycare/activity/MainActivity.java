@@ -54,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements AlertFragment.Fra
                     .commit();
         }
 
+        String token = FirebaseInstanceId.getInstance().getToken();
+        //Log.d("Token Me", token);
+
         initTnstances();
 
     }

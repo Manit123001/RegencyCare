@@ -94,7 +94,7 @@ public class ShowDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse("http://maps.google.com/maps?saddr="+dao.getLat()+ dao.getLng()+"&daddr="));
+                        Uri.parse("geo:0,0?q="+ dao.getLat()+","+dao.getLng()));
                 startActivity(intent);
             }
         });

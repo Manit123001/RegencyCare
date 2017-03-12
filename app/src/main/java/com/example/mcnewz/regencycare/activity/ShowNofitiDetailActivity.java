@@ -3,6 +3,7 @@ package com.example.mcnewz.regencycare.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,6 +48,9 @@ public class ShowNofitiDetailActivity extends AppCompatActivity {
     String departId;
     String departStatus;
     String totalTitleDetail;
+    private Button btnLocation;
+    private String lat;
+    private String lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,7 @@ public class ShowNofitiDetailActivity extends AppCompatActivity {
         ivImg = (ImageView) findViewById(R.id.ivImg);
         txtName = (TextView)findViewById(R.id.txtMember);
         txtTimer = (TextView)findViewById(R.id.txtTimer);
+        btnLocation = (Button) findViewById(R.id.btnLocation);
 
 
 //        if (bundle != null) {
@@ -95,6 +100,17 @@ public class ShowNofitiDetailActivity extends AppCompatActivity {
 
             }
         });
+
+        btnLocation .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = null;
+                intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("geo:0,0?q="+ lat+","+lng));
+                startActivity(intent);
+            }
+        });
+
         getData();
 
     }
@@ -161,7 +177,7 @@ public class ShowNofitiDetailActivity extends AppCompatActivity {
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray result = jsonObject.getJSONArray("result");
-            JSONObject collegeData = result.getJSONObject(0);
+            final JSONObject collegeData = result.getJSONObject(0);
 //            firstname = collegeData.getString(config.READ_FIRSTNAME);
 //            lastname = collegeData.getString(config.READ_LASTNAME);
 //            email   = collegeData.getString(config.READ_EMAIL);
@@ -174,6 +190,10 @@ public class ShowNofitiDetailActivity extends AppCompatActivity {
             memToken = collegeData.getString("member_token");
             departId = collegeData.getString("department_id");
             departStatus = collegeData.getString("department_status");
+            lat = collegeData.getString("ac_latitude");
+            lng = collegeData.getString("ac_longtitude");
+
+
             Log.d("TTTOOO",departStatus+departId);
             image = collegeData.getString("ac_photo");
             setImageUrl(image);
