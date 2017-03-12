@@ -34,16 +34,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ShowNofitiDetailActivity extends AppCompatActivity {
-String id_name;
+    String id_name;
 
     String title,detai,image,acStatus,memToken,namef,namel,timedata;
     Button btnOk;
-   // Date timedata;
+    // Date timedata;
     TextView txtSubject,txtName,txtTimer;
     TextView tvDexcription;
     ImageView ivImg;
 
     private ProgressDialog loading;
+    String departId;
+    String departStatus;
+    String totalTitleDetail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,8 +119,9 @@ String id_name;
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
                 params.put("id_ac", id_name);
+                params.put("departId", departId);
                 params.put("member_token",memToken);
-
+                params.put("detail", totalTitleDetail);
                 return params;
             }
         };
@@ -143,6 +148,7 @@ String id_name;
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
                 params.put("member_id", id_name);
+                params.put("department_id", "83");
                 return params;
             }
         };
@@ -166,9 +172,12 @@ String id_name;
             namef = collegeData.getString("member_f");
             namel = collegeData.getString("member_l");
             memToken = collegeData.getString("member_token");
-
+            departId = collegeData.getString("department_id");
+            departStatus = collegeData.getString("department_status");
+            Log.d("TTTOOO",departStatus+departId);
             image = collegeData.getString("ac_photo");
             setImageUrl(image);
+            totalTitleDetail =  "หน่วยงานกำลังดำเนินการให้ความช่วยเหลือ ณ. จุดเกิด"+" "+title;
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -176,9 +185,9 @@ String id_name;
 
 
         // ลิ้งค์รูป
-       // Toast.makeText(ShowNofitiDetailActivity.this,image,Toast.LENGTH_LONG).show();
+        // Toast.makeText(ShowNofitiDetailActivity.this,image,Toast.LENGTH_LONG).show();
 
-        if(acStatus.trim().equals("0")){
+        if(departStatus.trim().equals("0")){
             btnOk.setEnabled(false);
             btnOk.setBackgroundColor(Color.RED);
         }else {

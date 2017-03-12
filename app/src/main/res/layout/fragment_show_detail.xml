@@ -96,7 +96,6 @@
                     android:layout_weight="1"
                     android:textAlignment="center"
                     android:text="ตำแหน่งเกิดเหตุ"
-                    android:background="@color/colorPrimary"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
 

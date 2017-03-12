@@ -4,21 +4,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.example.mcnewz.regencycare.dao.ItemCollectionDao;
-import com.example.mcnewz.regencycare.dao.ItemDao;
-import com.example.mcnewz.regencycare.manager.AlertListManager;
-import com.example.mcnewz.regencycare.view.AlertItem;
 
-import java.text.SimpleDateFormat;
+import com.example.mcnewz.regencycare.dao.ItemAcidentCollectionDao;
+import com.example.mcnewz.regencycare.dao.ItemAcidentDao;
+import com.example.mcnewz.regencycare.view.NewsAcidentsItem;
+
 
 /**
  * Created by MCNEWZ on 08-Feb-17.
  */
 
-public class AlertListAdapter extends BaseAdapter {
-   ItemCollectionDao dao;
+public class NewsAcidentsAdapter extends BaseAdapter {
+   ItemAcidentCollectionDao dao;
 
-    public void setDao(ItemCollectionDao dao) {
+
+    public void setDao(ItemAcidentCollectionDao dao) {
         this.dao = dao;
     }
     @Override
@@ -45,14 +45,14 @@ public class AlertListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        AlertItem item ;
+        NewsAcidentsItem item ;
         if (convertView != null) {
-            item = (AlertItem) convertView;
+            item = (NewsAcidentsItem) convertView;
         } else {
-            item = new AlertItem(parent.getContext());
+            item = new NewsAcidentsItem(parent.getContext());
         }
 
-        ItemDao dao = (ItemDao) getItem(position);
+        ItemAcidentDao dao = (ItemAcidentDao) getItem(position);
 
         item.setTitle(dao.getSubject()+"( "+dao.getLat()+dao.getLng()+ " )");
         item.setName(dao.getSubject());

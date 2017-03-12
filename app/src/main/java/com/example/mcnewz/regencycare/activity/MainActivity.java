@@ -24,6 +24,7 @@ import com.example.mcnewz.regencycare.dao.ItemDao;
 import com.example.mcnewz.regencycare.fragment.AlertFragment;
 import com.example.mcnewz.regencycare.fragment.MapFragment;
 import com.example.mcnewz.regencycare.fragment.OneFragment;
+import com.example.mcnewz.regencycare.fragment.RegencyTabShowFunction;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -44,23 +45,20 @@ public class MainActivity extends AppCompatActivity implements AlertFragment.Fra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FirebaseMessaging.getInstance().subscribeToTopic("news");
-        String token = FirebaseInstanceId.getInstance().getToken();
-        //Log.d("TOKEN",token);
+        // AlertTab Fragment here !
+        if (savedInstanceState== null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.contentContainer,
+                            RegencyTabShowFunction.newInstance(),
+                            "RegencyTabShowFunction")
+                    .commit();
+        }
 
         initTnstances();
-//        if (savedInstanceState == null)
-//            getSupportFragmentManager().beginTransaction()
-//            .add(R.id.contentContainer, AlertFragment.newInstance())
-//            .commit();
+
     }
 
     private void initTnstances() {
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -81,48 +79,6 @@ public class MainActivity extends AppCompatActivity implements AlertFragment.Fra
     }
 
 
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        adapter.addFragment(AlertFragment.newInstance(), "ข้อมูลการแจ้งเหตุ");
-        adapter.addFragment(MapFragment.newInstance(), "ตำแหน่งจุดเกิดเหตุ");
-        adapter.addFragment(new OneFragment(), "รายละเอียด");
-
-
-
-
-        viewPager.setAdapter(adapter);
-    }
-
-
-    public class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-    }
 
 
     @Override

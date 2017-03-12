@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,27 +20,27 @@ import java.util.Date;
 /**
  * Created by nuuneoi on 11/16/2014.
  */
-public class AlertItem extends BaseCustomViewGroup {
+public class NewsAcidentsItem extends BaseCustomViewGroup {
 
     private TextView tvTitle, tvName, tvDescription, tvDate ;
     private ImageView ivProfile, ivImg;
     private TextView tvTime;
 
 
-    public AlertItem(Context context) {
+    public NewsAcidentsItem(Context context) {
         super(context);
         initInflate();
         initInstances();
     }
 
-    public AlertItem(Context context, AttributeSet attrs) {
+    public NewsAcidentsItem(Context context, AttributeSet attrs) {
         super(context, attrs);
         initInflate();
         initInstances();
         initWithAttrs(attrs, 0, 0);
     }
 
-    public AlertItem(Context context, AttributeSet attrs, int defStyleAttr) {
+    public NewsAcidentsItem(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initInflate();
         initInstances();
@@ -49,7 +48,7 @@ public class AlertItem extends BaseCustomViewGroup {
     }
 
     @TargetApi(21)
-    public AlertItem(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public NewsAcidentsItem(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initInflate();
         initInstances();
@@ -144,10 +143,11 @@ public class AlertItem extends BaseCustomViewGroup {
         String dateString = sdf.format(createDate);
         tvDate.setText(dateString);
     }
-    public void  setTime(String text){
+ public void  setTime(String text){
 
-        tvTime.setText(text);
+     tvTime.setText(text);
     }
+
 
     // setImage load Image
     public void setImageUrl (String url){

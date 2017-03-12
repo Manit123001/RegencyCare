@@ -1,7 +1,9 @@
 package com.example.mcnewz.regencycare.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -41,6 +43,8 @@ public class ShowDetailFragment extends Fragment {
     private ProgressDialog loading;
     String statsu;
     ItemDao dao;
+    private Button btnLocation;
+
     public ShowDetailFragment() {
         super();
     }
@@ -75,8 +79,9 @@ public class ShowDetailFragment extends Fragment {
         ivImg = (ImageView) rootView.findViewById(R.id.ivImg);
         txtName = (TextView)rootView.findViewById(R.id.txtMember);
         txtTimer = (TextView)rootView.findViewById(R.id.txtTimer);
+        btnLocation = (Button) rootView.findViewById(R.id.btnLocation);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Toast.makeText(getContext(),dateFormat.format(dao.getCreate_date()),Toast.LENGTH_LONG).show();
 
         txtName.setText(dao.getMemberFrist()+" "+dao.getMemberLast());
@@ -84,6 +89,15 @@ public class ShowDetailFragment extends Fragment {
         txtSubject.setText(dao.getSubject());
         tvDexcription.setText(dao.getDetail());
         statsu = String.valueOf(dao.getStatusAccept());
+
+        btnLocation .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("http://maps.google.com/maps?saddr="+dao.getLat()+ dao.getLng()+"&daddr="));
+                startActivity(intent);
+            }
+        });
 
         Toast.makeText(getContext(),statsu,Toast.LENGTH_LONG).show();
 

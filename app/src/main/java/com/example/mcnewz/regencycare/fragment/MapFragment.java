@@ -1,28 +1,42 @@
 package com.example.mcnewz.regencycare.fragment;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.example.mcnewz.regencycare.R;
+import com.example.mcnewz.regencycare.adapter.NewsAcidentsAdapter;
 import com.example.mcnewz.regencycare.dao.ItemAcidentCollectionDao;
 import com.example.mcnewz.regencycare.dao.ItemAcidentDao;
+import com.example.mcnewz.regencycare.manager.CheckNetwork;
 import com.example.mcnewz.regencycare.manager.HttpManager;
+import com.example.mcnewz.regencycare.manager.NewsAcidentsListManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -42,6 +56,7 @@ import com.inthecheesefactory.thecheeselibrary.manager.Contextor;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -82,12 +97,38 @@ public class MapFragment extends  Fragment implements
     private Marker markerSearchLocation;
     ArrayList<Integer> localClick = new ArrayList<Integer>();
     ArrayList<Integer> localClickDepartment = new ArrayList<Integer>();
+
+    // View XML
+    private Button btnOut;
+    private Button btnIn;
+    FloatingActionButton fabBtnSendLocation;
+    FloatingActionButton fabLocation;
+    FloatingSearchView mSearchView;
+    ImageButton btnShowMark1;
+    ImageButton btnShowMark2;
+    ImageButton btnShowMark3;
+    ImageButton btnShowMark4;
+    private TextView tvSlide;
+
+
+    // varia ble
+    int type1 = 1;
+    int type2 = 1;
+    int type3 = 1;
+    int type4 = 1;
+
     // Button Sheet
     View parentView;
     AcidentsBottomSheetDialog bottomSheetDialog;
     View bottomSheetNewsAcidents;
     private BottomSheetBehavior<View> behavior;
     private ListView listView;
+    private NewsAcidentsAdapter listAdapter;
+    NewsAcidentsListManager newsAcidentsListManager;
+
+
+
+
 
 
 
@@ -131,9 +172,47 @@ public class MapFragment extends  Fragment implements
 
     private void initInstances(View rootView) {
         // init instance with rootView.findViewById here
+
+
+        mSearchView = (FloatingSearchView)rootView.findViewById(R.id.floating_search_view);
+
+        fabLocation = (FloatingActionButton) rootView.findViewById(R.id.fabLocation);
+
+
+        btnShowMark1 = (ImageButton) rootView.findViewById(R.id.btnShowMark1);
+        btnShowMark2 = (ImageButton) rootView.findViewById(R.id.btnShowMark2);
+        btnShowMark3 = (ImageButton) rootView.findViewById(R.id.btnShowMark3);
+        btnShowMark4 = (ImageButton) rootView.findViewById(R.id.btnShowMark4);
+        tvSlide = (TextView) rootView.findViewById(R.id.tvSlide);
+
+        // listView
+        listView = (ListView) rootView.findViewById(R.id.listView);
+        //newsAcidents
+        bottomSheetNewsAcidents = rootView.findViewById(R.id.bottomSheetNewsAcidents);
+        behavior = BottomSheetBehavior.from(bottomSheetNewsAcidents);
+
+
+        setListenerAllView();
+
         callBackItem();
 
     }
+    private void setListenerAllView() {
+        mSearchView.setOnSearchListener(floatSearchListener);
+        mSearchView.setOnMenuItemClickListener(onMenuItemClickListener);
+
+        fabLocation.setOnClickListener(fabLocationListener);
+
+        btnShowMark1.setOnClickListener(showMarker1Listener);
+        btnShowMark2.setOnClickListener(showMarker2Listener);
+        btnShowMark3.setOnClickListener(showMarker3Listener);
+        btnShowMark4.setOnClickListener(showMarker4Listener);
+
+        behavior.setBottomSheetCallback(bottomSheetBehaviorNewsAcidents);
+
+
+    }
+
 
 
     private void callBackItem() {
@@ -214,6 +293,50 @@ public class MapFragment extends  Fragment implements
             }
         });
     }
+
+    private void setNewsAcidentsShow(){
+        listAdapter = new NewsAcidentsAdapter();
+        listView.setAdapter(listAdapter);
+        newsAcidentsListManager = new NewsAcidentsListManager();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ItemAcidentDao dao = newsAcidentsListManager.getDao().getData().get(position);
+                //FragmentListener listener =  (FragmentListener) getActivity();
+                Toast.makeText(getContext(), ""+position, Toast.LENGTH_SHORT).show();
+                //listener.onPhotoItemClicked(dao);
+            }
+        });
+
+        Call<ItemAcidentCollectionDao> call = HttpManager.getInstance().getService().loadAcidentItemList();
+        call.enqueue(new Callback<ItemAcidentCollectionDao>() {
+            @Override
+            public void onResponse(Call<ItemAcidentCollectionDao> call, Response<ItemAcidentCollectionDao> response) {
+                if ( response.isSuccessful()){
+                    ItemAcidentCollectionDao dao = response.body();
+                    //Toast.makeText(Contextor.getInstance().getContext(), "Complete"+dao.getData().get(0).getId(), Toast.LENGTH_SHORT).show();
+                    listAdapter.setDao(dao);
+                    listAdapter.notifyDataSetChanged();
+
+                    newsAcidentsListManager.setDao(dao);
+                }else{
+                    try {
+                        Toast.makeText(getContext(), response.errorBody().string(), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ItemAcidentCollectionDao> call, Throwable t) {
+                Toast.makeText(Contextor.getInstance().getContext(), t.toString(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
     private Marker getMarker(String snippet, String title, int typeAc, LatLng latLng) {
         return mMap.addMarker(new MarkerOptions()
                 .position(latLng)
@@ -476,8 +599,261 @@ public class MapFragment extends  Fragment implements
             // You can add here other case statements according to your requirement.
         }
     }
+    // Change Type map
+    public void changeType() {
+        if (mMap.getMapType() == GoogleMap.MAP_TYPE_NORMAL) {
+            mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
+        } else
+            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+    }
 
 
 
 
+
+    /*******************
+     * Listenner Zone
+     *******************/
+
+    View.OnClickListener fabLocationListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            updateLocation();
+            Toast.makeText(Contextor.getInstance().getContext(), "" + latLng, Toast.LENGTH_SHORT).show();
+
+        }
+    };
+    int MODELOADSLIDENEWS = 1;
+    BottomSheetBehavior.BottomSheetCallback bottomSheetBehaviorNewsAcidents = new BottomSheetBehavior.BottomSheetCallback() {
+        @Override
+        public void onStateChanged(@NonNull View bottomSheet, int newState) {
+            // React to state change
+            //Toast.makeText(getContext(), "Start", Toast.LENGTH_SHORT).show();
+            if (newState == 4 ){
+                tvSlide.setText("Slide Up News" );
+            } else{
+                tvSlide.setText("เหตุร้ายรอบตัว");
+
+            }
+
+            if(MODELOADSLIDENEWS == 1){
+                // Check internet
+                if (new CheckNetwork(Contextor.getInstance().getContext()).isNetworkAvailable()) {
+
+                    setNewsAcidentsShow();
+                    MODELOADSLIDENEWS = 0;
+                } else {
+                    // No Internet
+                    Toast.makeText(Contextor.getInstance().getContext(), "no internet!", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        }
+
+        @Override
+        public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+            // React to dragging events
+            //tvSlide.setText("......."+slideOffset);
+            bottomSheet.showContextMenu();
+            if(slideOffset == 0){
+                MODELOADSLIDENEWS= 1;
+            }
+
+        }
+    };
+
+
+    FloatingSearchView.OnSearchListener floatSearchListener = new FloatingSearchView.OnSearchListener() {
+        Address address;
+
+        @Override
+        public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
+            Toast.makeText(Contextor.getInstance().getContext(), "Click1", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onSearchAction(String currentQuery) {
+            try {
+
+//                Toast.makeText(Contextor.getInstance().getContext(), "Here ... " + xx, Toast.LENGTH_SHORT).show();
+
+                if(currentQuery != null ){
+
+                    String location = currentQuery;
+                    List<Address> addressList = null;
+
+                    Geocoder geocoder = new Geocoder(getContext());
+                    try {
+                        addressList = geocoder.getFromLocationName(location, 1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if(addressList != null){
+                        address = addressList.get(0);
+                    }
+                    latLng = new LatLng(address.getLatitude(), address.getLongitude());
+
+                    markerSearchLocation = mMap.addMarker(new MarkerOptions()
+                            .position(latLng).title(location)
+                            .snippet(address.getCountryName() + "\n" + address.getFeatureName()));
+                    markerSearchLocation.setTag(0);
+
+                    // move animateion
+                    mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+
+                } else {
+
+                }
+
+                mSearchView.setActivated(false);
+
+            }catch (IndexOutOfBoundsException e){
+                Toast.makeText(getContext(), "Not Found", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    };
+
+    FloatingSearchView.OnMenuItemClickListener onMenuItemClickListener = new FloatingSearchView.OnMenuItemClickListener() {
+        @Override
+        public void onActionMenuItemSelected(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.typeMap:
+                    showToast("Change Map");
+                    changeType();
+                    break;
+                case R.id.action_settings:
+                    showToast("Settings");
+                    break;
+            }
+        }
+
+    };
+
+
+    View.OnClickListener showMarker1Listener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            if (type1 == 1) {
+                //Toast.makeText(getContext(), "x = 1", Toast.LENGTH_SHORT).show();
+                btnShowMark1.setBackgroundResource(R.color.gray_active_icon);
+
+                for (Marker marker : mMarkerArray) {
+                    marker.setVisible(false);
+                    //marker.remove(); <-- works too!
+                }
+                type1 = 0;
+
+            } else {
+
+                //Toast.makeText(getContext(), "x = 0", Toast.LENGTH_SHORT).show();
+                btnShowMark1.setBackgroundResource(R.color.bottom_item_type_1);
+
+
+                for (Marker marker : mMarkerArray) {
+                    marker.setVisible(true);
+                    //marker.remove(); <-- works too!
+
+
+                }
+                type1 = 1;
+
+            }
+        }
+    };
+
+    View.OnClickListener showMarker2Listener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+
+            if (type2 == 1) {
+                //Toast.makeText(getContext(), "x = 1", Toast.LENGTH_SHORT).show();
+                btnShowMark2.setBackgroundResource(R.color.gray_active_icon);
+
+                for (Marker marker : mMarkerArray2) {
+                    marker.setVisible(false);
+                    //marker.remove(); <-- works too!
+                }
+                type2 = 0;
+
+            } else {
+
+                //Toast.makeText(getContext(), "x = 0", Toast.LENGTH_SHORT).show();
+                btnShowMark2.setBackgroundResource(R.color.bottom_item_type_2);
+
+                for (Marker marker : mMarkerArray2) {
+                    marker.setVisible(true);
+                    //marker.remove(); <-- works too!
+
+
+                }
+                type2 = 1;
+            }
+        }
+    };
+
+    View.OnClickListener showMarker3Listener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+
+            if (type3 == 1) {
+                //Toast.makeText(getContext(), "x = 1", Toast.LENGTH_SHORT).show();
+                btnShowMark3.setBackgroundResource(R.color.gray_active_icon);
+
+                for (Marker marker : mMarkerArray3) {
+                    marker.setVisible(false);
+                    //marker.remove(); <-- works too!
+                }
+                type3 = 0;
+            } else {
+
+                //Toast.makeText(getContext(), "x = 0", Toast.LENGTH_SHORT).show();
+                btnShowMark3.setBackgroundResource(R.color.bottom_item_type_3);
+
+                for (Marker marker : mMarkerArray3) {
+                    marker.setVisible(true);
+                    //marker.remove(); <-- works too!
+
+                }
+                type3 = 1;
+            }
+        }
+    };
+
+
+    View.OnClickListener showMarker4Listener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+
+            if (type4 == 1) {
+                //Toast.makeText(getContext(), "x = 1", Toast.LENGTH_SHORT).show();
+                btnShowMark4.setBackgroundResource(R.color.gray_active_icon);
+
+                for (Marker marker : mMarkerArray4) {
+                    marker.setVisible(false);
+                    //marker.remove(); <-- works too!
+                }
+                type4 = 0;
+
+            } else {
+
+                //Toast.makeText(getContext(), "x = 0", Toast.LENGTH_SHORT).show();
+                btnShowMark4.setBackgroundResource(R.color.bottom_item_type_4);
+
+                for (Marker marker : mMarkerArray4) {
+                    marker.setVisible(true);
+                    //marker.remove(); <-- works too!
+
+
+
+                }
+                type4 = 1;
+            }
+        }
+    };
 }
