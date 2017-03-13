@@ -70,7 +70,7 @@ public class RegencyTabShowFunction extends Fragment {
                     case 1:
                         return MapFragment.newInstance();
                     case 2:
-                        return ProfileFragment.newInstance();
+                        return new OneFragment();
 
                     default:
                         return null;
