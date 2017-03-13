@@ -1,0 +1,150 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="สถานีตำรวจภูธรด่านมะขามเตี้ย"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="normal|bold" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/department" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="125dp"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/logodepart" />
+
+
+
+            <LinearLayout
+                android:id="@+id/linerlayout"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+
+                android:layout_marginTop="40dp"
+                android:layout_below="@+id/textView"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:gravity="right"
+                    android:paddingRight="15dp"
+                    android:text="สถานที่ติดต่อ:"
+                    android:textSize="15sp"
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textStyle="normal|bold"
+                    android:textColor="@color/black" />
+                <TextView
+                    android:textSize="15sp"
+                    android:text="เลขที่ 77 หมู่ 2 ถนนบรมราชชนนี ต.ฉิมพลี อ.ตลิ่งชัน กรุงเทพมหานคร 10170"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linerlayout2"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/linerlayout"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="15sp"
+
+                    android:gravity="right"
+                    android:paddingRight="15dp"
+                    android:text="อีเมล:"
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textStyle="normal|bold"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:textSize="15sp"
+
+                    android:text="polic_makamtea@hotmail.com"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView2" />
+
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/linerlayout2"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="15sp"
+
+                    android:gravity="right"
+                    android:paddingRight="15dp"
+                    android:text="เบอร์ติดต่อ:"
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textStyle="normal|bold"
+                    android:textColor="@color/black" />
+                <TextView
+                    android:textSize="15sp"
+
+                    android:text="024-4863602"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>
