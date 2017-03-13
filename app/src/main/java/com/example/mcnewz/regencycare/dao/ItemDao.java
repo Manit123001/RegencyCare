@@ -30,6 +30,24 @@ public class ItemDao implements Parcelable {
     @SerializedName("member_F") private String memberFrist;
     @SerializedName("member_L") private String memberLast;
     @SerializedName("members_token") private String memberToken;
+    @SerializedName("ac_dep_status") private int departStatus;
+    @SerializedName("ac_dep_id") private int departId;
+
+    public int getDepartStatus() {
+        return departStatus;
+    }
+
+    public void setDepartStatus(int departStatus) {
+        this.departStatus = departStatus;
+    }
+
+    public int getDepartId() {
+        return departId;
+    }
+
+    public void setDepartId(int departId) {
+        this.departId = departId;
+    }
 
     public String getMemberFrist() {
         return memberFrist;
@@ -78,6 +96,8 @@ public class ItemDao implements Parcelable {
         memberFrist = in.readString();
         memberLast = in.readString();
         memberToken = in.readString();
+        departId = in.readInt();
+        departStatus = in.readInt();
 
     }
 
@@ -210,6 +230,8 @@ public class ItemDao implements Parcelable {
         dest.writeString(memberFrist);
         dest.writeString(memberLast);
         dest.writeString(memberToken);
+        dest.writeInt(departId);
+        dest.writeInt(departStatus);
 
 
     }

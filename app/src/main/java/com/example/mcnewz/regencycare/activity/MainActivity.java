@@ -67,18 +67,18 @@ public class MainActivity extends AppCompatActivity implements AlertFragment.Fra
         setSupportActionBar(toolbar);
 
 
-        // drawer layout Here
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(
-                MainActivity.this,
-                drawerLayout,
-                R.string.open_drawer,
-                R.string.close_drawer
-        );
-
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        // drawer layout Here
+//        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+//        actionBarDrawerToggle = new ActionBarDrawerToggle(
+//                MainActivity.this,
+//                drawerLayout,
+//                R.string.open_drawer,
+//                R.string.close_drawer
+//        );
+//
+//        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+//        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -87,13 +87,13 @@ public class MainActivity extends AppCompatActivity implements AlertFragment.Fra
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        actionBarDrawerToggle.syncState();
+        //actionBarDrawerToggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        actionBarDrawerToggle.onConfigurationChanged(newConfig);
+        //actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override

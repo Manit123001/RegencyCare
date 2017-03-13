@@ -44,6 +44,7 @@ public class ShowDetailFragment extends Fragment {
     String statsu;
     ItemDao dao;
     private Button btnLocation;
+    private String totalTitleDetail;
 
     public ShowDetailFragment() {
         super();
@@ -113,7 +114,7 @@ public class ShowDetailFragment extends Fragment {
 
 
 
-        if(dao.getStatusAccept() == 0){
+        if(dao.getDepartStatus() == 0){
             btnAccept.setEnabled(false);
             btnAccept.setBackgroundColor(Color.RED);
         }else {
@@ -126,7 +127,7 @@ public class ShowDetailFragment extends Fragment {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(ivImg);
 
-
+        totalTitleDetail =  "หน่วยงานกำลังดำเนินการให้ความช่วยเหลือ ณ. จุดเกิด"+" "+dao.getSubject();
 
     }
 
@@ -150,6 +151,11 @@ public class ShowDetailFragment extends Fragment {
                 Map<String,String> params = new HashMap<>();
                 params.put("id_ac",String.valueOf(dao.getId()));
                 params.put("member_token",dao.getMemberToken());
+                params.put("departId",String.valueOf(dao.getDepartId()));
+                params.put("detail",totalTitleDetail);
+
+
+
                 return params;
             }
         };

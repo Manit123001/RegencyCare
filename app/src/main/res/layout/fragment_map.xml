@@ -179,11 +179,11 @@
                                     android:layout_gravity="center"
                                     android:text="Slide Up News"
                                     android:textStyle="bold"
-                                    android:textColor="@color/colorPrimaryTab"
+                                    android:textColor="@color/colorPrimary"
                                     android:textSize="16sp"/>
 
                                 <ImageView
-                                    android:src="@drawable/ic_slide"
+                                    android:src="@drawable/ic_slideup_green"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content" />
                         </LinearLayout>
