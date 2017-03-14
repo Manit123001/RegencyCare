@@ -223,6 +223,7 @@ public class ShowNofitiDetailActivity extends AppCompatActivity {
         txtTimer.setText(timedata);
         txtSubject.setText(title);
         tvDexcription.setText(detai);
+
         tvUser.setText(namef+" "+namel);
         tvTel.setText(tel);
 
