@@ -19,6 +19,13 @@ import android.support.design.widget.TabLayout;
 import android.widget.Toast;
 
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.mcnewz.regencycare.R;
 import com.example.mcnewz.regencycare.dao.ItemDao;
 import com.example.mcnewz.regencycare.fragment.AlertFragment;
@@ -29,7 +36,9 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements AlertFragment.FragmentListener{
 
@@ -38,13 +47,17 @@ public class MainActivity extends AppCompatActivity implements AlertFragment.Fra
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    String user_id;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        String token = FirebaseInstanceId.getInstance().getToken();
+        user_id = token;
 
+        updatetoken();
         // AlertTab Fragment here !
         if (savedInstanceState== null) {
             getSupportFragmentManager().beginTransaction()
@@ -54,12 +67,40 @@ public class MainActivity extends AppCompatActivity implements AlertFragment.Fra
                     .commit();
         }
 
-        String token = FirebaseInstanceId.getInstance().getToken();
+
         //Log.d("Token Me", token);
 
         initTnstances();
 
     }
+
+    private void  updatetoken(){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://icareuserver.comscisau.com/icare/androidTest/updateTokenRegency.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), "SplashSreenERROR", Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("member_token", user_id);
+                return params;
+
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+
 
     private void initTnstances() {
 
