@@ -45,6 +45,9 @@ public class ShowDetailFragment extends Fragment {
     ItemDao dao;
     private Button btnLocation;
     private String totalTitleDetail;
+    private TextView tvTel;
+    private TextView tvEmail;
+    private TextView tvUser;
 
     public ShowDetailFragment() {
         super();
@@ -78,8 +81,10 @@ public class ShowDetailFragment extends Fragment {
         txtSubject = (TextView) rootView.findViewById(R.id.tvName);
         tvDexcription = (TextView) rootView.findViewById(R.id.tvDescription);
         ivImg = (ImageView) rootView.findViewById(R.id.ivImg);
-        txtName = (TextView)rootView.findViewById(R.id.txtMember);
+        txtName = (TextView) rootView.findViewById(R.id.txtMember);
         txtTimer = (TextView)rootView.findViewById(R.id.txtTimer);
+        tvUser = (TextView)rootView.findViewById(R.id.tvUser);
+        tvTel = (TextView)rootView.findViewById(R.id.tvTel);
         btnLocation = (Button) rootView.findViewById(R.id.btnLocation);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -90,6 +95,8 @@ public class ShowDetailFragment extends Fragment {
         txtSubject.setText(dao.getSubject());
         tvDexcription.setText(dao.getDetail());
         statsu = String.valueOf(dao.getStatusAccept());
+        tvUser.setText(dao.getMemberFrist()+" "+dao.getMemberLast());
+        tvTel.setText(dao.getMemberTel());
 
         btnLocation .setOnClickListener(new View.OnClickListener() {
             @Override
