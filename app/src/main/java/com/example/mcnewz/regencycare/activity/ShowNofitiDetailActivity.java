@@ -51,6 +51,9 @@ public class ShowNofitiDetailActivity extends AppCompatActivity {
     private Button btnLocation;
     private String lat;
     private String lng;
+    private TextView tvTel;
+    private TextView tvUser;
+    private String tel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +66,8 @@ public class ShowNofitiDetailActivity extends AppCompatActivity {
         txtName = (TextView)findViewById(R.id.txtMember);
         txtTimer = (TextView)findViewById(R.id.txtTimer);
         btnLocation = (Button) findViewById(R.id.btnLocation);
-
+        tvUser = (TextView)findViewById(R.id.tvUser);
+        tvTel = (TextView)findViewById(R.id.tvTel);
 
 //        if (bundle != null) {
 //            for (String key : bundle.keySet()) {
@@ -191,7 +195,7 @@ public class ShowNofitiDetailActivity extends AppCompatActivity {
             departId = collegeData.getString("department_id");
             departStatus = collegeData.getString("department_status");
             lat = collegeData.getString("ac_latitude");
-            lng = collegeData.getString("ac_longtitude");
+            tel = collegeData.getString("member_tel");
 
 
             Log.d("TTTOOO",departStatus+departId);
@@ -219,6 +223,9 @@ public class ShowNofitiDetailActivity extends AppCompatActivity {
         txtTimer.setText(timedata);
         txtSubject.setText(title);
         tvDexcription.setText(detai);
+        tvUser.setText(namef+" "+namel);
+        tvTel.setText(tel);
+
     }
 
     public void setImageUrl (String url){
