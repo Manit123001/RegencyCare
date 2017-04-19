@@ -49,8 +49,12 @@ public class ShowNofitiDetailActivity extends AppCompatActivity {
     String departStatus;
     String totalTitleDetail;
     private Button btnLocation;
+
+
     private String lat;
     private String lng;
+
+
     private TextView tvTel;
     private TextView tvUser;
     private String tel;
@@ -105,15 +109,24 @@ public class ShowNofitiDetailActivity extends AppCompatActivity {
             }
         });
 
+
+
         btnLocation .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = null;
-                intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("geo:0,0?q="+ lat+","+lng));
+//                Intent intent = null;
+//                intent = new Intent(Intent.ACTION_VIEW,
+//                        Uri.parse("geo:0,0?q="+ lat+","+lng));
+//                startActivity(intent);
+
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("google.navigation:q="+lat+","+lng));
                 startActivity(intent);
+
             }
         });
+
+
+
 
         getData();
 
@@ -194,7 +207,12 @@ public class ShowNofitiDetailActivity extends AppCompatActivity {
             memToken = collegeData.getString("member_token");
             departId = collegeData.getString("department_id");
             departStatus = collegeData.getString("department_status");
+
+
             lat = collegeData.getString("ac_latitude");
+            lng = collegeData.getString("ac_longtitude");
+
+
             tel = collegeData.getString("member_tel");
 
 

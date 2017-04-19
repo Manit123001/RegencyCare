@@ -1,5 +1,6 @@
 package com.example.mcnewz.regencycare.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -75,21 +76,16 @@ public class ShowDetailFragment extends Fragment {
         initInstances(rootView);
         return rootView;
     }
-
+    Double lat;
+    Double lng;
     private void initInstances(View rootView) {
         // init instance with rootView.findViewById here
-        txtSubject = (TextView) rootView.findViewById(R.id.tvName);
-        tvDexcription = (TextView) rootView.findViewById(R.id.tvDescription);
-        ivImg = (ImageView) rootView.findViewById(R.id.ivImg);
-        txtName = (TextView) rootView.findViewById(R.id.txtMember);
-        txtTimer = (TextView)rootView.findViewById(R.id.txtTimer);
-        tvUser = (TextView)rootView.findViewById(R.id.tvUser);
-        tvTel = (TextView)rootView.findViewById(R.id.tvTel);
-        btnLocation = (Button) rootView.findViewById(R.id.btnLocation);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        setFindeViewById(rootView);
+
+
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Toast.makeText(getContext(),dateFormat.format(dao.getCreate_date()),Toast.LENGTH_LONG).show();
-
         txtName.setText(dao.getMemberFrist()+" "+dao.getMemberLast());
         txtTimer.setText(dateFormat.format(dao.getCreate_date()));
         txtSubject.setText(dao.getSubject());
@@ -98,12 +94,20 @@ public class ShowDetailFragment extends Fragment {
         tvUser.setText(dao.getMemberFrist()+" "+dao.getMemberLast());
         tvTel.setText(dao.getMemberTel());
 
+
+         lat = Double.parseDouble(dao.getLat());
+         lng =Double.parseDouble(dao.getLng());
+
+
         btnLocation .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse("geo:0,0?q="+ dao.getLat()+","+dao.getLng()));
+
+
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("google.navigation:q="+lat+","+lng));
                 startActivity(intent);
+
+
             }
         });
 
@@ -136,6 +140,18 @@ public class ShowDetailFragment extends Fragment {
 
         totalTitleDetail =  "หน่วยงานกำลังดำเนินการให้ความช่วยเหลือ ณ. จุดเกิด"+" "+dao.getSubject();
 
+    }
+
+    private void setFindeViewById(View rootView) {
+
+        txtSubject = (TextView) rootView.findViewById(R.id.tvName);
+        tvDexcription = (TextView) rootView.findViewById(R.id.tvDescription);
+        ivImg = (ImageView) rootView.findViewById(R.id.ivImg);
+        txtName = (TextView) rootView.findViewById(R.id.txtMember);
+        txtTimer = (TextView)rootView.findViewById(R.id.txtTimer);
+        tvUser = (TextView)rootView.findViewById(R.id.tvUser);
+        tvTel = (TextView)rootView.findViewById(R.id.tvTel);
+        btnLocation = (Button) rootView.findViewById(R.id.btnLocation);
     }
 
     private void onAccept(){
