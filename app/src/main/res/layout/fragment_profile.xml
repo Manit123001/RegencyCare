@@ -12,10 +12,10 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/txtNameDepart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imageView"
+                android:layout_below="@+id/iv_logo"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:text="สถานีตำรวจภูธรด่านมะขามเตี้ย"
@@ -24,7 +24,7 @@
                 android:textStyle="normal|bold" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/iv_bg"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_alignParentLeft="true"
@@ -34,7 +34,7 @@
                 android:src="@drawable/department" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/iv_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -54,7 +54,7 @@
                 android:layout_marginRight="20dp"
 
                 android:layout_marginTop="40dp"
-                android:layout_below="@+id/textView"
+                android:layout_below="@+id/txtNameDepart"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -70,6 +70,7 @@
                     android:textColor="@color/black" />
                 <TextView
                     android:textSize="15sp"
+                    android:id="@+id/txtAddress"
                     android:text="เลขที่ 77 หมู่ 2 ถนนบรมราชชนนี ต.ฉิมพลี อ.ตลิ่งชัน กรุงเทพมหานคร 10170"
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -105,7 +106,7 @@
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView2" />
+                    android:id="@+id/txtEmail" />
 
             </LinearLayout>
 
@@ -113,7 +114,7 @@
 
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-
+                android:id="@+id/linerlayout3"
                 android:layout_marginTop="15dp"
                 android:layout_below="@+id/linerlayout2"
                 android:orientation="horizontal"
@@ -132,12 +133,24 @@
                     android:textColor="@color/black" />
                 <TextView
                     android:textSize="15sp"
-
+                    android:id="@+id/txtPhon"
                     android:text="024-4863602"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content" />
 
+            </LinearLayout>
+            <LinearLayout
+                android:layout_below="@+id/linerlayout3"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <Button
+                    android:text="LogOut"
+                    android:id="@+id/btnOut"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
 
