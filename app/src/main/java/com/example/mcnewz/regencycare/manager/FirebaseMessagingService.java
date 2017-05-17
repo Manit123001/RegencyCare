@@ -63,7 +63,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                 .setContentIntent(resultPendingIntent)
                 .setContentInfo(notification.getTitle())
                 .setLargeIcon(icon)
-
                 .setColor(Color.RED)
                 .setSmallIcon(R.mipmap.ic_launcher);
 
