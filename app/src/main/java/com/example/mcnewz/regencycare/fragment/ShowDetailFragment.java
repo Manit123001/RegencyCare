@@ -57,6 +57,7 @@ public class ShowDetailFragment extends Fragment {
     public static ShowDetailFragment newInstance(ItemDao dao) {
         ShowDetailFragment fragment = new ShowDetailFragment();
         Bundle args = new Bundle();
+
         args.putParcelable("dao",dao);
         fragment.setArguments(args);
         return fragment;

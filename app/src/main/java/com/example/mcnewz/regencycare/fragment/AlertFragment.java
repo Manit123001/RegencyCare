@@ -35,6 +35,10 @@ public class AlertFragment extends Fragment {
     private ListView listView;
     private AlertListAdapter listAdapter;
 
+
+    AlertListManager  alertListManager;
+
+
     public interface FragmentListener{
         void onPhotoItemClicked(ItemDao dao);
     }
@@ -60,7 +64,6 @@ public class AlertFragment extends Fragment {
     private ItemCollectionDao dao;
 
 
-    AlertListManager  alertListManager;
     private void initInstances(View rootView) {
         // init instance with rootView.findViewById here
 
@@ -74,12 +77,12 @@ public class AlertFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ItemDao dao = alertListManager.getDao().getData().get(position);
-                FragmentListener listener =  (FragmentListener) getActivity();
 
+                FragmentListener listener =  (FragmentListener) getActivity();
                 listener.onPhotoItemClicked(dao);
-                // todo : send DAO
             }
         });
+
          refreshData();
 
     }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -152,7 +153,7 @@ public class LoginFragment extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
+                        Log.d("GGTT","อัพโทเคน"+config.token);
                     }
                 },
                 new Response.ErrorListener() {
@@ -164,8 +165,8 @@ public class LoginFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("department_id", uID);
-                params.put("department_token", config.token);
+                params.put("department_id", edtEmailLogin.getText().toString().trim());
+                params.put("department_token", config.token.toString().trim());
                 return params;
             }
         };

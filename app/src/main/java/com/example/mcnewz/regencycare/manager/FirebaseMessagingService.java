@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.mcnewz.regencycare.R;
@@ -43,6 +44,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         Bitmap icon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
         String picture_url = data.get("picture_url");
 
+        Log.d("testPhoto",data.get("image_url"));
+
         Intent resultIntent = new Intent(this, ShowNofitiDetailActivity.class);
         resultIntent.putExtra("id_title",picture_url);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
@@ -63,6 +66,20 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
                 .setColor(Color.RED)
                 .setSmallIcon(R.mipmap.ic_launcher);
+
+
+        try {
+            String image_url = data.get("image_url");
+            if (image_url != null && !"".equals(image_url)) {
+                URL url = new URL(image_url);
+                Bitmap bigPicture = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                notificationBuilder.setStyle(
+                        new NotificationCompat.BigPictureStyle().bigPicture(bigPicture).setSummaryText(notification.getBody())
+                );
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         notificationBuilder.setDefaults(Notification.DEFAULT_VIBRATE);
         notificationBuilder.setLights(Color.YELLOW, 1000, 300);

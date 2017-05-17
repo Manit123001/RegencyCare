@@ -36,7 +36,7 @@ public class LogInActivity extends AppCompatActivity {
 
         final String token = FirebaseInstanceId.getInstance().getToken();
         config.token = token;
-        Log.d("TGTG",token);
+//        Log.d("TGTG",token);
 
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         loggedIn = sharedPreferences.getBoolean(config.LOGGEDIN_SHARED_PREF, false);
@@ -47,7 +47,6 @@ public class LogInActivity extends AppCompatActivity {
             // CheckInternet
             if (new CheckNetwork(Contextor.getInstance().getContext()).isNetworkAvailable()) {
                 // your get/post related code..like HttpPost = new HttpPost(url);
-                updatetoken();
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -65,32 +64,5 @@ public class LogInActivity extends AppCompatActivity {
                     .commit();
 
         }
-    }
-    private void  updatetoken(){
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, config.TOKEN_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "SplashSreenERROR", Toast.LENGTH_LONG).show();
-                    }
-                }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
-                params.put("department_id", user_id);
-                params.put("department_token", config.token);
-                return params;
-
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.add(stringRequest);
     }
 }
